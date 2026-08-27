@@ -97,6 +97,14 @@ jobs:
           destination: ./_site
           verbose: true
 
+      - name: Reclaim generated artifact ownership
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d _site
+          sudo chown -R "$(id -u):$(id -g)" _site
+          chmod -R u+rwX _site
+
       - name: Harden development preview artifact
         shell: bash
         run: |
