@@ -25,7 +25,6 @@ jobs:
 
     steps:
       - name: Checkout deployment repository
-        # actions/checkout v6
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
@@ -44,7 +43,6 @@ jobs:
           printf 'Using source ref: %s\n' "$ref"
 
       - name: Checkout authoritative website source
-        # actions/checkout v6
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           repository: ${{ env.SOURCE_REPOSITORY }}
@@ -69,7 +67,6 @@ jobs:
           test -f source/docs/_config.yml
           python3 - <<'PY'
           from pathlib import Path
-
           path = Path('source/docs/_config.yml')
           text = path.read_text(encoding='utf-8')
           lines = text.splitlines()
@@ -86,11 +83,9 @@ jobs:
 
       - name: Configure GitHub Pages
         id: pages
-        # actions/configure-pages v5
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
 
       - name: Build Jekyll site
-        # actions/jekyll-build-pages v1
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697
         with:
           source: ./source/docs
@@ -109,15 +104,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
-          # Custom-workflow Pages deployments ignore CNAME files. Removing the
-          # production CNAME makes the development artifact unambiguous.
           rm -f _site/CNAME
 
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
           marker = '<meta name="robots" content="noindex, nofollow, noarchive">'
+          pattern = re.compile(r'<meta\s+name=["\']robots["\']\s+content=["\'][^"\']*["\']\s*/?>', re.I)
           root = Path('_site')
           html_files = list(root.rglob('*.html'))
           if not html_files:
@@ -125,11 +119,12 @@ jobs:
 
           for path in html_files:
               text = path.read_text(encoding='utf-8')
-              if 'name="robots"' in text or "name='robots'" in text:
-                  continue
-              if '<head>' not in text:
-                  raise SystemExit(f'missing <head> in {path}')
-              text = text.replace('<head>', '<head>\n  ' + marker, 1)
+              if pattern.search(text):
+                  text = pattern.sub(marker, text, count=1)
+              else:
+                  if '<head>' not in text:
+                      raise SystemExit(f'missing <head> in {path}')
+                  text = text.replace('<head>', '<head>\n  ' + marker, 1)
               path.write_text(text, encoding='utf-8')
           PY
 
@@ -179,7 +174,6 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload GitHub Pages artifact
-        # actions/upload-pages-artifact v4
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
         with:
           path: ./_site
@@ -197,5 +191,4 @@ jobs:
     steps:
       - name: Deploy development preview
         id: deployment
-        # actions/deploy-pages v4
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
