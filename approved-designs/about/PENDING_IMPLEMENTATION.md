@@ -1,19 +1,20 @@
-# ABOUT — Pending Exact-Reproduction Implementation
+# ABOUT — IMPLEMENTATION COMPLETE / PRODUCTION APPROVED
 
-## Status
+This marker originally tracked the ABOUT page as pending implementation.
 
-The ABOUT visual direction/mockup was approved earlier in the redesign process, but the page has **not yet completed the exact-reproduction implementation and browser-review cycle** used for MAIN, SERVICES, and CAPABILITY.
+That status is now superseded.
 
-Do not mark ABOUT production-approved until the following sequence is complete:
+The ABOUT exact-reproduction implementation completed the browser-review cycle and was explicitly approved by the client on **2026-09-08**.
 
-1. confirm the approved ABOUT mockup as visual source of truth
-2. harvest/recreate clean ABOUT assets
-3. measure section geometry
-4. build the standalone ABOUT page
-5. render in browser
-6. correct visual drift
-7. obtain explicit approval
-8. create an `APPROVAL_LOCK.md`
-9. integrate into the deployable source
+Authoritative preservation records are now located in this directory:
 
-This file prevents the approved visual direction from being mistaken for a completed production implementation.
+- `APPROVAL_LOCK.md`
+- `BBS_ABOUT_PAGE_EXACT_REPRODUCTION_MASTER_PROMPT_V2.md`
+- `BBS_ABOUT_PAGE_V2_REVISION_NOTES.md`
+- `SOURCE_RESTORE.md`
+- `SHA256SUMS.txt`
+- `source/BBS_ABOUT_PAGE_REVIEW_V2.html.part01` through `part05`
+
+The reconstructed `BBS_ABOUT_PAGE_REVIEW_V2.html` must match the SHA-256 recorded in `SHA256SUMS.txt` before it is treated as the approved implementation.
+
+Do not replace this approved ABOUT implementation with an older mockup, prototype, or reinterpretation.
