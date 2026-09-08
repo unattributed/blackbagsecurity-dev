@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | Black Bag Security</title>
+<meta name="description" content="Principal-led security engineering, offensive research, and practical outcomes for high-consequence systems.">
+<style>
+:root{
+  --bg:#06121b;--surface:#07141d;--surface2:#081923;--line:#294958;--line2:#335867;
+  --text:#f5f6f4;--muted:#b4c0c7;--micro:#8297a3;--lime:#d9ff23;
+  --serif:Georgia,"Times New Roman",Times,serif;--sans:Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:#091a25;scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#102838 0,#07131c 48%,#071923 100%);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.site{width:1024px;margin:0 auto;background:#06121b;border-left:1px solid #294958;border-right:1px solid #294958;overflow:hidden}
+.header{height:72px;display:grid;grid-template-columns:475px 1fr;align-items:center;padding:0 36px;border-bottom:1px solid var(--line);background:#06121b}
+.brand-wrap{display:flex;align-items:center;gap:17px}
+.brand{font-size:15px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.brand-rule{width:2px;height:30px;background:var(--lime)}
+.brand-tag{font-size:7px;line-height:1.55;letter-spacing:.22em;color:#b2c0c7;text-transform:uppercase}
+.nav{justify-self:end;height:100%;display:flex;align-items:center;gap:31px}
+.nav a{position:relative;height:100%;display:flex;align-items:center;font-size:9px}
+.nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--lime)}
+
+.hero{height:530px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:#06121b}
+.hero-art{position:absolute;right:0;top:0;width:575px;height:530px;object-fit:cover;object-position:center}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#06121b 0%,#06121b 38%,rgba(6,18,27,.84) 48%,rgba(6,18,27,.20) 69%,rgba(6,18,27,.02) 100%);pointer-events:none}
+.hero-copy{position:absolute;z-index:2;left:57px;top:55px;width:470px}
+.kicker{display:flex;align-items:center;gap:14px;color:#a7b8c1;font-size:7px;font-weight:700;letter-spacing:.23em;text-transform:uppercase}
+.kicker::before{content:"";width:26px;height:2px;background:var(--lime)}
+.hero h1{margin:15px 0 0;font-family:var(--serif);font-size:49px;line-height:.99;font-weight:400;letter-spacing:-.02em}
+.hero-strap{margin-top:17px;color:#d3dce0;font-size:8px;font-weight:700;letter-spacing:.29em;text-transform:uppercase}
+.hero-body{margin-top:21px;width:420px;color:#c4ced3;font-size:13px;line-height:1.58}
+.hero-body p{margin:0 0 11px}
+.actions{display:flex;gap:14px;margin-top:17px}
+.btn{height:43px;min-width:174px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;border:1px solid #678394;border-radius:3px;font-size:12px;font-weight:800}
+.btn.primary{background:var(--lime);border-color:var(--lime);color:#071016}
+.btn.secondary{background:rgba(5,15,22,.72)}
+.editorial{position:absolute;z-index:2;right:39px;color:#8fa4af;font-size:8px;line-height:1.55;letter-spacing:.22em;text-transform:uppercase}
+.editorial::before{content:"";display:block;width:21px;height:2px;background:var(--lime);margin-bottom:10px}
+.hero .editorial{top:31px;width:61px}
+
+.approach{height:315px;padding:28px 58px 25px;border-bottom:1px solid var(--line);background:#06121b}
+.approach h2{margin:14px 0 23px;font-size:30px;font-weight:400}
+.principles{display:grid;grid-template-columns:repeat(4,1fr)}
+.principle{min-height:185px;padding:0 41px;border-left:1px solid #264554}
+.principle:first-child{padding-left:0;border-left:0}
+.principle:last-child{padding-right:0}
+.icon{width:34px;height:34px;color:var(--lime);margin-bottom:14px}
+.principle h3{margin:0;font-size:11px;line-height:1.55;letter-spacing:.23em;text-transform:uppercase}
+.principle p{margin:10px 0 0;color:#b3c0c6;font-size:11px;line-height:1.55}
+
+.accountability{height:340px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:#06121b}
+.mountain{position:absolute;right:0;top:0;width:620px;height:340px;object-fit:cover;object-position:center}
+.accountability::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#06121b 0%,#06121b 38%,rgba(6,18,27,.74) 52%,rgba(6,18,27,.12) 77%,rgba(6,18,27,0) 100%);pointer-events:none}
+.account-copy{position:absolute;z-index:2;left:59px;top:31px;width:430px}
+.accountability h2{margin:12px 0 17px;font-family:var(--serif);font-size:37px;line-height:.96;font-weight:400}
+.accountability p{margin:0;color:#c0ccd2;font-size:12px;line-height:1.52;width:392px}.accountability .account-follow{margin-top:12px}
+.signature{margin-top:21px;font-size:13px;font-weight:800}
+.signature small{display:block;margin:7px 0 0 28px;color:#9bb0ba;font-size:7px;letter-spacing:.22em;font-weight:400}
+.accountability .editorial{right:43px;bottom:36px;width:88px}
+
+.work{height:176px;display:grid;grid-template-columns:1.25fr .8fr .55fr 95px;align-items:center;padding:0 58px;border-bottom:1px solid var(--line);background:#06121b}
+.work h2{margin:12px 0 0;font-family:var(--serif);font-size:34px;line-height:1.02;font-weight:400}
+.work-copy{color:#bdc9cf;font-size:10px;line-height:1.6;padding:0 25px 0 17px}
+.work-copy .btn{margin-top:10px;width:201px;height:39px;min-width:0;padding:0 19px}
+.contact-icons{display:flex;gap:5px;justify-content:center}
+.icon-box{width:58px;height:61px;border:1px solid #44667a;border-radius:4px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0b2231,#071722)}
+.icon-box svg{width:27px;height:27px;color:#bcd7e5}
+.work-stack{color:#8196a2;font-size:7px;line-height:1.55;letter-spacing:.19em;text-transform:uppercase;border-left:1px solid #294958;padding-left:18px}
+.work-stack::before{content:"";display:block;width:21px;height:2px;background:var(--lime);margin-bottom:10px}
+
+.footer{height:106px;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 40px;background:#06121b}
+.footer-brand{font-size:10px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+.footer-mid{justify-self:center;color:#8297a3;font-size:6px;letter-spacing:.17em;text-transform:uppercase}
+.footer-nav{justify-self:end;display:flex;gap:23px;color:#a2b0b7;font-size:6px;text-transform:uppercase}
+.footer-nav::after{content:"";width:28px;height:2px;background:var(--lime);margin-left:14px;margin-top:4px}
+
+a:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.btn{transition:filter .16s ease,transform .16s ease}.btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:800px){
+ .site{width:100%;border:0}.header{height:auto;min-height:68px;grid-template-columns:1fr;padding:12px 20px}.nav{justify-self:start;gap:17px;height:34px;overflow:auto}
+ .hero{height:auto;min-height:760px}.hero-art{width:100%;height:420px;top:auto;bottom:0;object-position:58% center}.hero::after{background:linear-gradient(180deg,#06121b 0,#06121b 45%,rgba(6,18,27,.78) 62%,rgba(6,18,27,.08) 100%)}.hero-copy{position:relative;left:auto;top:auto;width:auto;padding:38px 22px 440px}.hero h1{font-size:clamp(42px,10vw,58px)}.hero-body{width:min(100%,560px)}.hero .editorial{display:none}
+ .approach{height:auto;padding:30px 22px}.principles{grid-template-columns:repeat(2,1fr);gap:24px}.principle{padding:0 20px;min-height:180px}
+ .accountability{height:auto;min-height:620px}.mountain{width:100%;height:310px;top:auto;bottom:0}.accountability::after{background:linear-gradient(180deg,#06121b 0,#06121b 48%,rgba(6,18,27,.55) 68%,rgba(6,18,27,.08) 100%)}.account-copy{position:relative;left:auto;top:auto;width:auto;padding:34px 22px 330px}.accountability .editorial{display:none}
+ .work{height:auto;grid-template-columns:1fr;padding:30px 22px;gap:24px}.work-copy{padding:0}.contact-icons
