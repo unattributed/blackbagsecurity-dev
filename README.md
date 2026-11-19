@@ -8,16 +8,19 @@ It does **not** contain the production website source. The authoritative website
 
 - publish the redesign to `https://dev.blackbagsecurity.com`
 - keep production `www.blackbagsecurity.com` isolated from design work
-- make each preview reproducible from a named source branch or commit
+- make each preview reproducible from a reviewed, immutable source commit
 - preserve a clean VCS promotion path from feature work to the redesign integration branch and finally to production
 
 ## Source model
 
-The preview workflow reads `preview/source-ref.txt` and checks out that ref from:
+The preview workflow checks out the immutable `SOURCE_COMMIT` configured in
+`.github/workflows/pages.yml` from:
 
 `unattributed/blackbagsecurity.github.io`
 
-During active homepage implementation this may point to `feature/homepage`. For integrated review it should point to `redesign/v2`. It can also be pinned to a commit SHA for a deterministic review build.
+Update that SHA through a reviewed pull request whenever a new preview is
+approved. Branch names and manual workflow dispatch are intentionally not used,
+so a preview build cannot execute mutable or dispatcher-selected source code.
 
 ## Deployment
 

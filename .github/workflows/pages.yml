@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 permissions: {}
 
@@ -14,6 +16,7 @@ concurrency:
 
 env:
   SOURCE_REPOSITORY: unattributed/blackbagsecurity.github.io
+  SOURCE_COMMIT: 9acc15199b273b953f12a4903a240803927cb48a
   DEVELOPMENT_URL: https://dev.blackbagsecurity.com
 
 jobs:
@@ -29,24 +32,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Read website source ref
-        id: source
-        shell: bash
-        run: |
-          set -euo pipefail
-          ref="$(tr -d '\r\n' < preview/source-ref.txt)"
-          if [[ -z "$ref" ]]; then
-            echo "preview/source-ref.txt is empty" >&2
-            exit 1
-          fi
-          printf 'ref=%s\n' "$ref" >> "$GITHUB_OUTPUT"
-          printf 'Using source ref: %s\n' "$ref"
-
       - name: Checkout authoritative website source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           repository: ${{ env.SOURCE_REPOSITORY }}
-          ref: ${{ steps.source.outputs.ref }}
+          ref: ${{ env.SOURCE_COMMIT }}
           path: source
           fetch-depth: 1
           persist-credentials: false
@@ -136,7 +126,7 @@ jobs:
           cat > _site/preview-build.txt <<EOF
           environment=development
           source_repository=${SOURCE_REPOSITORY}
-          source_ref=${{ steps.source.outputs.ref }}
+          source_ref=${SOURCE_COMMIT}
           source_commit=${{ steps.revision.outputs.sha }}
           preview_url=${DEVELOPMENT_URL}
           EOF
@@ -166,19 +156,26 @@ jobs:
             echo '## Development preview build'
             echo
             echo "- source repository: \`${SOURCE_REPOSITORY}\`"
-            echo "- source ref: \`${{ steps.source.outputs.ref }}\`"
+            echo "- source ref: \`${SOURCE_COMMIT}\`"
             echo "- source commit: \`${{ steps.revision.outputs.sha }}\`"
             echo "- target: \`${DEVELOPMENT_URL}\`"
             echo '- crawler directive: `noindex, nofollow, noarchive`'
             echo '- robots policy: `Disallow: /`'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Package GitHub Pages artifact
+        run: tar --dereference --hard-dereference --directory _site -cvf "$RUNNER_TEMP/pages-artifact.tar" .
+
       - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          path: ./_site
+          name: github-pages
+          path: ${{ runner.temp }}/pages-artifact.tar
+          if-no-files-found: error
+          retention-days: 1
 
   deploy:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: build
     permissions:
